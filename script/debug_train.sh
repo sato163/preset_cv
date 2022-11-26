@@ -1,6 +1,6 @@
 program="/Users/sato/nn/exe/preset_cv/git_rep/src/main.py"
 
-class_num=100
+class_num=1000
 vector_dim=10
 
 batch_size=100
