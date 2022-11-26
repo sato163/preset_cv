@@ -1,4 +1,4 @@
-program="/Users/sato/nn/exe/preset_cv/git_rep/src/main.py"
+program="/Users/sato/nn/exe/preset_cv/code/src/main.py"
 
 class_num=1000
 vector_dim=10
@@ -24,5 +24,6 @@ python3 ${program}\
         --batch_size ${batch_size}\
         --epoch ${epoch}\
         --loss_type ${loss_type}\
-        --output_dir ${output_dir}
+        --output_dir ${output_dir}\
+        # --flag_fp16
 

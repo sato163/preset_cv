@@ -14,12 +14,13 @@ def calc_cos_similarity_freq(model, class_num, batch_size):
     for index in tqdm(range(int(class_num//batch_size))):
         input = all_input[index*batch_size:(index+1)*batch_size]
         cos_similarity = model.predict_on_batch(input)
+        cos_similarity = tf.cast(cos_similarity, dtype=tf.float16)
         cos_similarity = tf.reshape(cos_similarity, [(class_num*batch_size)])
         cos_similarity = tf.clip_by_value(cos_similarity, clip_value_max=1, clip_value_min=-1)
 
         # ヒストグラムを書くために、cos_similarityからそれぞれの値の頻度を計算
         index_freq = (cos_similarity + 1) * 90
-        index_freq = tf.cast(index_freq, dtype=tf.int32)
+        index_freq = tf.cast(index_freq, dtype=tf.uint8)
         index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=181)
         index_freq = tf.reduce_sum(index_freq, axis=0)
 

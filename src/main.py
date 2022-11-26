@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras import mixed_precision
 from tqdm import tqdm
 
 import evaluate
@@ -19,8 +20,14 @@ import models
 @click.option("--epoch", type=int, default=1)
 @click.option("--loss_type", type=str, default="nearest_orthogonal_loss")
 @click.option("--output_dir", type=str, default="./")
-def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir):
+@click.option("--flag_fp16", is_flag=True)
+def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, flag_fp16):
     output_dir = Path(output_dir)
+
+    if flag_fp16:
+        policy = mixed_precision.Policy('mixed_float16')
+        mixed_precision.set_global_policy(policy)
+
 
     input_layer = tf.keras.layers.Input(shape=(1,), dtype=tf.int32)
     cv_layer = models.AngulerLayer(class_num, vector_dim)
