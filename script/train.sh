@@ -8,7 +8,7 @@ epoch=0
 
 separate_onehot=4
 evaluate_batch_size=200
-cv_cos_hist_step_num=21
+cv_cos_hist_step_num=11
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
