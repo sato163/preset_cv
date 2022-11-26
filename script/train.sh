@@ -6,8 +6,8 @@ vector_dim=512
 batch_size=1000
 epoch=0
 
-separate_onehot=100
-evaluate_batch_size=200
+separate_onehot=1
+evaluate_batch_size=100
 cv_cos_hist_step_num=21
 
 # loss_type="nearest_orthogonal_loss"
