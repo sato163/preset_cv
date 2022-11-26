@@ -1,10 +1,10 @@
-program="/Users/sato/nn/exe/presetCV/src/main.py"
+program="/content/drive/MyDrive/exe/preset_cv/code/src/main.py"
 
-class_num=10000
+class_num=100000
 vector_dim=512
 
 batch_size=100
-epoch=10
+epoch=100
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
@@ -14,7 +14,7 @@ loss_type="all_orthogonal_or_more_loss"
 
 data_time=`date '+%Y%m%d%H%M%S'`
 
-output_dir="/Users/sato/nn/exe/presetCV/result/"${data_time}
+output_dir="/content/drive/MyDrive/exe/preset_cv/result/"${data_time}
 
 mkdir ${output_dir}
 
