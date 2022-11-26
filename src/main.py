@@ -55,7 +55,7 @@ def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir):
     evaluate.plot_hist(x_list, freq_list, file=(output_dir / "cv_cos_hist.png"))
 
     # l2ノルムのヒストグラム
-    x_list, freq_list = evaluate.calc_vector_norm_freq(vector_matrix, range_max=1, step_num=100)
+    x_list, freq_list = evaluate.calc_vector_norm_freq(vector_matrix, range_max=1, step_num=50)
     evaluate.plot_hist(x_list, freq_list, file=(output_dir / "l2_norm_hist.png"))
 
     # ベクトルが3次元だったら描写する
