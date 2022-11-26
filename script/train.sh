@@ -18,11 +18,13 @@ output_dir="/content/drive/MyDrive/exe/preset_cv/result/"${data_time}
 
 mkdir ${output_dir}
 
+log_path=${output_dir}"/log.log"
+
 python3 ${program}\
         --class_num ${class_num}\
         --vector_dim ${vector_dim}\
         --batch_size ${batch_size}\
         --epoch ${epoch}\
         --loss_type ${loss_type}\
-        --output_dir ${output_dir}
-
+        --output_dir ${output_dir}\
+        2>&1 | tee -a ${log_path}
