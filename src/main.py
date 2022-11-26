@@ -44,7 +44,7 @@ def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir):
     # 学習
     inputs = tf.constant([[x] for x in range(class_num)])
     dummy_label = np.zeros([class_num, 1])
-    model.fit(inputs, dummy_label, epochs=epoch, batch_size=batch_size)
+    # model.fit(inputs, dummy_label, epochs=epoch, batch_size=batch_size)
 
     # センターベクトルの取得
     vector_matrix = model.get_layer("anguler_layer").get_weights()[0]
