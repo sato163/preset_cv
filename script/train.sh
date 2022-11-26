@@ -7,7 +7,7 @@ batch_size=1000
 epoch=0
 
 separate_onehot=100
-evaluate_batch_size=100
+evaluate_batch_size=1000
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
