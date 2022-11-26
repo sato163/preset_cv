@@ -1,3 +1,5 @@
+git pull
+
 program="/content/drive/MyDrive/exe/preset_cv/code/src/main.py"
 
 class_num=100000
