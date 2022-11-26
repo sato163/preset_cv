@@ -1,7 +1,7 @@
 program="/content/drive/MyDrive/exe/preset_cv/code/src/main.py"
 
 class_num=10000
-vector_dim=128
+vector_dim=56
 
 batch_size=1000
 epoch=1000
