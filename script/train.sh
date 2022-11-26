@@ -6,9 +6,9 @@ vector_dim=512
 batch_size=1000
 epoch=0
 
-separate_onehot=1
-evaluate_batch_size=200
-cv_cos_hist_step_num=11
+separate_onehot=4
+evaluate_batch_size=100
+cv_cos_hist_step_num=41
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
