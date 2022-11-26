@@ -4,7 +4,7 @@ class_num=1000000
 vector_dim=512
 
 batch_size=1000
-epoch=1
+epoch=100
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
