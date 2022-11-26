@@ -20,8 +20,8 @@ def calc_cos_similarity_freq(model, class_num, batch_size):
 
         # ヒストグラムを書くために、cos_similarityからそれぞれの値の頻度を計算
         index_freq = (cos_similarity + 1) * 90
-        index_freq = tf.cast(index_freq, dtype=tf.uint8)
-        index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=181)
+        index_freq = tf.cast(index_freq, dtype=tf.int32)
+        index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=181, dtype=tf.uint8)
         index_freq = tf.reduce_sum(index_freq, axis=0)
 
         # 頻度配列を更新
