@@ -6,7 +6,7 @@ vector_dim=512
 batch_size=1000
 epoch=0
 
-separate_onehot=1
+separate_onehot=10
 evaluate_batch_size=100
 cv_cos_hist_step_num=21
 
