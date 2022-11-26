@@ -4,7 +4,7 @@ class_num=10000
 vector_dim=128
 
 batch_size=1000
-epoch=100
+epoch=1000
 
 separate_onehot=10
 evaluate_batch_size=1000
