@@ -22,8 +22,18 @@ import models
 @click.option("--output_dir", type=str, default="./")
 @click.option("--separate_onehot", type=int, default=1)
 @click.option("--evaluate_batch_size", type=int, default=100)
+@click.option("--cv_cos_hist_step_num", type=int, default=100)
 @click.option("--flag_fp16", is_flag=True)
-def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, separate_onehot, evaluate_batch_size, flag_fp16):
+def main(class_num,
+         vector_dim,
+         batch_size,
+         epoch,
+         loss_type,
+         output_dir,
+         separate_onehot,
+         evaluate_batch_size,
+         cv_cos_hist_step_num,
+         flag_fp16):
     output_dir = Path(output_dir)
 
     if flag_fp16:
@@ -60,7 +70,7 @@ def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, separa
     np.save((output_dir / f"cv_class_num_{class_num}_vector_dim_{vector_dim}.npy"), vector_matrix)
 
     # 全センターベクトル間の内積のヒストグラム
-    x_list, freq_list = evaluate.calc_cos_similarity_freq(model, class_num, batch_size=evaluate_batch_size, separate_onehot=separate_onehot)
+    x_list, freq_list = evaluate.calc_cos_similarity_freq(model, class_num, batch_size=evaluate_batch_size, separate_onehot=separate_onehot, step_num=cv_cos_hist_step_num)
     evaluate.plot_hist(x_list, freq_list, file=(output_dir / "cv_cos_hist.png"))
 
     # l2ノルムのヒストグラム
@@ -70,6 +80,7 @@ def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, separa
     # ベクトルが3次元だったら描写する
     if vector_matrix.shape[-1] == 3:
         evaluate.plot_vector(list(vector_matrix))
+
 
 if __name__ == "__main__":
     main()

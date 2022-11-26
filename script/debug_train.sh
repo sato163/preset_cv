@@ -1,10 +1,14 @@
 program="/Users/sato/nn/exe/preset_cv/code/src/main.py"
 
-class_num=10000
-vector_dim=10
+class_num=1000
+vector_dim=100
 
 batch_size=100
-epoch=10
+epoch=0
+
+separate_onehot=1
+evaluate_batch_size=1000
+cv_cos_hist_step_num=100
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
@@ -16,10 +20,9 @@ data_time=`date '+%Y%m%d%H%M%S'`
 
 output_dir="/Users/sato/nn/exe/preset_cv/result/"${data_time}
 
-separate_onehot=10
-evaluate_batch_size=100
-
 mkdir ${output_dir}
+
+log_path=${output_dir}"/class_num_${class_num}_vector_dim_${vector_dim}_ep${epoch}_batch${batch_size}.log"
 
 python3 ${program}\
         --class_num ${class_num}\
@@ -29,6 +32,6 @@ python3 ${program}\
         --loss_type ${loss_type}\
         --output_dir ${output_dir}\
         --separate_onehot ${separate_onehot}\
-        --evaluate_batch_size ${evaluate_batch_size}
-        # --flag_fp16
-
+        --evaluate_batch_size ${evaluate_batch_size}\
+        --cv_cos_hist_step_num ${cv_cos_hist_step_num}\
+        2>&1 | tee -a ${log_path}
