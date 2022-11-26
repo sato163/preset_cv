@@ -1,9 +1,9 @@
 program="/content/drive/MyDrive/exe/preset_cv/code/src/main.py"
 
-class_num=10000
+class_num=1000000
 vector_dim=512
 
-batch_size=100
+batch_size=10000
 epoch=1
 
 # loss_type="nearest_orthogonal_loss"
