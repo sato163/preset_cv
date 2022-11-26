@@ -1,6 +1,6 @@
 program="/Users/sato/nn/exe/preset_cv/code/src/main.py"
 
-class_num=1000
+class_num=10000
 vector_dim=10
 
 batch_size=100
@@ -16,6 +16,9 @@ data_time=`date '+%Y%m%d%H%M%S'`
 
 output_dir="/Users/sato/nn/exe/preset_cv/result/"${data_time}
 
+separate_onehot=10
+evaluate_batch_size=100
+
 mkdir ${output_dir}
 
 python3 ${program}\
@@ -25,5 +28,7 @@ python3 ${program}\
         --epoch ${epoch}\
         --loss_type ${loss_type}\
         --output_dir ${output_dir}\
+        --separate_onehot ${separate_onehot}\
+        --evaluate_batch_size ${evaluate_batch_size}
         # --flag_fp16
 

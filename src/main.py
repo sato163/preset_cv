@@ -20,14 +20,15 @@ import models
 @click.option("--epoch", type=int, default=1)
 @click.option("--loss_type", type=str, default="nearest_orthogonal_loss")
 @click.option("--output_dir", type=str, default="./")
+@click.option("--separate_onehot", type=int, default=1)
+@click.option("--evaluate_batch_size", type=int, default=100)
 @click.option("--flag_fp16", is_flag=True)
-def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, flag_fp16):
+def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, separate_onehot, evaluate_batch_size, flag_fp16):
     output_dir = Path(output_dir)
 
     if flag_fp16:
         policy = mixed_precision.Policy('mixed_float16')
         mixed_precision.set_global_policy(policy)
-
 
     input_layer = tf.keras.layers.Input(shape=(1,), dtype=tf.int32)
     cv_layer = models.AngulerLayer(class_num, vector_dim)
@@ -51,14 +52,15 @@ def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, flag_f
     # 学習
     inputs = tf.constant([[x] for x in range(class_num)])
     dummy_label = np.zeros([class_num, 1])
-    # model.fit(inputs, dummy_label, epochs=epoch, batch_size=batch_size)
+    if epoch > 0:
+        model.fit(inputs, dummy_label, epochs=epoch, batch_size=batch_size)
 
     # センターベクトルの取得
     vector_matrix = model.get_layer("anguler_layer").get_weights()[0]
     np.save((output_dir / f"cv_class_num_{class_num}_vector_dim_{vector_dim}.npy"), vector_matrix)
 
     # 全センターベクトル間の内積のヒストグラム
-    x_list, freq_list = evaluate.calc_cos_similarity_freq(model, class_num, batch_size=10)
+    x_list, freq_list = evaluate.calc_cos_similarity_freq(model, class_num, batch_size=evaluate_batch_size, separate_onehot=separate_onehot)
     evaluate.plot_hist(x_list, freq_list, file=(output_dir / "cv_cos_hist.png"))
 
     # l2ノルムのヒストグラム

@@ -7,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 
 
-def calc_cos_similarity_freq(model, class_num, batch_size):
+def calc_cos_similarity_freq(model, class_num, batch_size, separate_onehot=1):
     all_input = tf.constant([[x] for x in range(class_num)])
 
     freq_np = np.zeros([181])
@@ -22,11 +22,20 @@ def calc_cos_similarity_freq(model, class_num, batch_size):
         index_freq = (cos_similarity + 1) * 90
         index_freq = tf.cast(index_freq, dtype=tf.int32)
         # index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=181, dtype=tf.uint8)
-        index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=181)
-        index_freq = tf.reduce_sum(index_freq, axis=0)
+        if separate_onehot > 1:
+            separate_dim = int(index_freq.shape[0] / separate_onehot)
+            for x in range(separate_onehot):
+                sep_index_freq = index_freq[x*separate_dim:(x+1)*separate_dim]
+                sep_index_freq = tf.one_hot(indices=tf.squeeze(sep_index_freq), depth=181)
+                sep_index_freq = tf.reduce_sum(sep_index_freq, axis=0)
+                # 頻度配列を更新
+                freq_np = freq_np + sep_index_freq.numpy()
 
-        # 頻度配列を更新
-        freq_np = freq_np + index_freq.numpy()
+        else:
+            index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=181)
+            index_freq = tf.reduce_sum(index_freq, axis=0)
+            # 頻度配列を更新
+            freq_np = freq_np + index_freq.numpy()
 
     # -1から1の横軸を作成
     x_list = [(x/90 - 1) for x in range(181)]

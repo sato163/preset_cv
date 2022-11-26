@@ -4,7 +4,10 @@ class_num=500000
 vector_dim=512
 
 batch_size=1000
-epoch=1
+epoch=0
+
+separate_onehot=100
+evaluate_batch_size=100
 
 # loss_type="nearest_orthogonal_loss"
 # loss_type="nearest_orthogonal_or_more_loss"
@@ -27,4 +30,6 @@ python3 ${program}\
         --epoch ${epoch}\
         --loss_type ${loss_type}\
         --output_dir ${output_dir}\
+        --separate_onehot ${separate_onehot}\
+        --evaluate_batch_size ${evaluate_batch_size}\
         2>&1 | tee -a ${log_path}
