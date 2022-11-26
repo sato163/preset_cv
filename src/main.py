@@ -58,7 +58,7 @@ def main(class_num, vector_dim, batch_size, epoch, loss_type, output_dir, flag_f
     np.save((output_dir / f"cv_class_num_{class_num}_vector_dim_{vector_dim}.npy"), vector_matrix)
 
     # 全センターベクトル間の内積のヒストグラム
-    x_list, freq_list = evaluate.calc_cos_similarity_freq(model, class_num, batch_size=100)
+    x_list, freq_list = evaluate.calc_cos_similarity_freq(model, class_num, batch_size=10)
     evaluate.plot_hist(x_list, freq_list, file=(output_dir / "cv_cos_hist.png"))
 
     # l2ノルムのヒストグラム
