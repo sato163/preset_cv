@@ -7,7 +7,16 @@ import numpy as np
 import tensorflow as tf
 
 
-def calc_cos_similarity_freq(model, class_num, batch_size, separate_onehot=1, step_num=100):
+def count_freq(matrix, step_num=100):
+    # freq_np = np.zeros([step_num+1])
+    # for x in range(step_num+1):
+    #     freq_np[x] = tf.math.reduce_sum(tf.where((matrix > x) & (matrix < (x+1))))
+    freq_np = np.array([tf.math.reduce_sum(tf.where((matrix > x) & (matrix < (x+1)))) for x in range(step_num+1)])
+
+    return freq_np
+
+
+def calc_cos_similarity_freq(model, class_num, batch_size, separate_onehot=1, step_num=100, flag_debug=False):
     all_input = tf.constant([[x] for x in range(class_num)])
 
     freq_np = np.zeros([step_num+1])
@@ -26,11 +35,14 @@ def calc_cos_similarity_freq(model, class_num, batch_size, separate_onehot=1, st
             separate_dim = int(index_freq.shape[0] / separate_onehot)
             for x in range(separate_onehot):
                 sep_index_freq = index_freq[x*separate_dim:(x+1)*separate_dim]
-                sep_index_freq = tf.one_hot(indices=tf.squeeze(sep_index_freq), depth=(step_num+1))
-                sep_index_freq = tf.reduce_sum(sep_index_freq, axis=0)
-                # 頻度配列を更新
-                freq_np = freq_np + sep_index_freq.numpy()
-
+                if not flag_debug:
+                    sep_index_freq = tf.one_hot(indices=tf.squeeze(sep_index_freq), depth=(step_num+1))
+                    sep_index_freq = tf.reduce_sum(sep_index_freq, axis=0)
+                    # 頻度配列を更新
+                    freq_np = freq_np + sep_index_freq.numpy()
+                else:
+                    freq_np = freq_np + count_freq(sep_index_freq, step_num)
+ 
         else:
             index_freq = tf.one_hot(indices=tf.squeeze(index_freq), depth=(step_num+1))
             index_freq = tf.reduce_sum(index_freq, axis=0)
